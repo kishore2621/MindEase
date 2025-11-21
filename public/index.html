@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+ <link rel="icon" type="image/png" href="favicon.ico" sizes="512x512">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MindEase — AI Mental Wellness Companion</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4A90E2">
+</head>
+<body>
+  <div id="loading-overlay" class="overlay">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <div>Loading MindEase...</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <h1 class="brand">MindEase</h1>
+        <button id="new-chat-btn" class="btn small">+ New</button>
+      </div>
+
+      <div class="sidebar-search">
+        <input id="sidebar-search" placeholder="Search chats..." />
+      </div>
+
+      <div id="chat-list" class="chat-list"></div>
+
+      <div class="sidebar-footer">
+        <div id="user-info" class="user-info"></div>
+        <div class="footer-btns">
+          <button id="login-btn" class="btn">Login</button>
+          <button id="logout-btn" class="btn danger" style="display:none">Logout</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <header class="topbar">
+        <div class="title">MindEase</div>
+        <div class="top-actions">
+          <div id="current-chat-title" class="chat-title">Welcome</div>
+        </div>
+      </header>
+
+      <section id="chat-window" class="chat-window" aria-live="polite"></section>
+
+      <!-- Exercise card -->
+      <div id="exercise-card" class="exercise-card" style="display:none">
+        <h3>Suggested Exercise</h3>
+        <div id="exercise-text"></div>
+      </div>
+
+      <!-- Composer -->
+      <div class="composer">
+        <textarea id="user-input" placeholder="How are you feeling?" rows="1"></textarea>
+        <div class="composer-controls">
+          <div id="char-count" class="char-count">0</div>
+          <button id="send-btn" class="btn primary">Send</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="login-modal" class="modal" style="display:none">
+    <div class="modal-card">
+      <h3>Login to MindEase</h3>
+      <label>Name</label>
+      <input id="login-name" placeholder="Your name" />
+      <label>Email</label>
+      <input id="login-email" placeholder="you@example.com" />
+      <div class="modal-actions">
+        <button id="login-submit" class="btn primary">Login</button>
+        <button id="login-cancel" class="btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Logout Confirmation Modal -->
+<div id="logout-modal" class="modal" style="display:none">
+  <div class="modal-card">
+    <h3>Are you sure you want to log out?</h3>
+
+    <div class="modal-actions">
+      <button id="logout-cancel" class="btn">No</button>
+      <button id="logout-confirm" class="btn primary">Yes</button>
+    </div>
+  </div>
+</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,5 +1,8 @@
 import os
+import sys
 from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[0]))
+
 from datetime import datetime, timezone
 
 from flask import Flask, request, jsonify
@@ -7,6 +10,8 @@ from flask_cors import CORS
 
 import google.generativeai as genai
 from dotenv import load_dotenv
+
+
 
 # Load environment variables (Vercel also injects env vars automatically)
 load_dotenv()

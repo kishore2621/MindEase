@@ -28,6 +28,9 @@ genai.configure(api_key=GEMINI_API_KEY)
 # Correct static folder path for Vercel
 PUBLIC_FOLDER = str(Path(__file__).resolve().parents[1] / "public")
 
+print("PUBLIC_FOLDER path:", PUBLIC_FOLDER)
+print("Index exists:", os.path.exists(os.path.join(PUBLIC_FOLDER, "index.html")))
+
 app = Flask(__name__, static_folder=PUBLIC_FOLDER, static_url_path="/")
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -58,6 +61,15 @@ tracking_agent = TrackingAgent(
 @app.route("/")
 def homepage():
     return app.send_static_file("index.html")
+
+
+@app.route("/debug")
+def debug():
+    return {
+        "public_folder": PUBLIC_FOLDER,
+        "index_exists": os.path.exists(os.path.join(PUBLIC_FOLDER, "index.html")),
+        "files_in_public": os.listdir(PUBLIC_FOLDER) if os.path.exists(PUBLIC_FOLDER) else []
+    }
 
 # --------------- CHAT API --------------------------
 @app.route('/api/chat', methods=['POST'])

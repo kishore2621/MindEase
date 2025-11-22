@@ -3,7 +3,10 @@
         {
             "src": "api/index.py",
             "use": "@vercel/python"
-        }
+        },
+         { "src": "*.js", "use": "@vercel/node" },
+          { "src": "*.html", "use": "@vercel/static" },
+           { "src": "*.py", "use": "@vercel/python" }
     ],
     "routes": [
         {

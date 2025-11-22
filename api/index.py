@@ -5,7 +5,7 @@ sys.path.append(str(Path(__file__).resolve().parents[0]))
 
 from datetime import datetime, timezone
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 from flask_cors import CORS
 
 import google.generativeai as genai
@@ -31,7 +31,7 @@ PUBLIC_FOLDER = str(Path(__file__).resolve().parents[1] / "public")
 print("PUBLIC_FOLDER path:", PUBLIC_FOLDER)
 print("Index exists:", os.path.exists(os.path.join(PUBLIC_FOLDER, "index.html")))
 
-app = Flask(__name__, static_folder=PUBLIC_FOLDER, static_url_path="/")
+app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Import internal modules after app is created
@@ -58,18 +58,34 @@ tracking_agent = TrackingAgent(
 )
 
 # --------------- FRONTEND ROUTE --------------------
-@app.route("/")
-def homepage():
-    return app.send_static_file("index.html")
+# @app.route("/")
+# def homepage():
+#     return app.send_static_file("index.html")
+
+@app.route('/')
+def index():
+	return render_template('index.html')
 
 
-@app.route("/debug")
-def debug():
-    return {
-        "public_folder": PUBLIC_FOLDER,
-        "index_exists": os.path.exists(os.path.join(PUBLIC_FOLDER, "index.html")),
-        "files_in_public": os.listdir(PUBLIC_FOLDER) if os.path.exists(PUBLIC_FOLDER) else []
-    }
+@app.route("/debug-home")
+def debug_home():
+    info = {}
+    try:
+        # Attempt to render the template (without sending it to user)
+        render_template("index.html")
+        info["template_status"] = "FOUND"
+    except Exception as e:
+        info["template_status"] = "ERROR"
+        info["template_error"] = str(e)
+
+    # Show template folder path & contents
+    try:
+        info["template_folder"] = app.template_folder
+        info["template_files"] = os.listdir(app.template_folder)
+    except Exception as e:
+        info["template_folder_error"] = str(e)
+
+    return jsonify(info)
 
 # --------------- CHAT API --------------------------
 @app.route('/api/chat', methods=['POST'])

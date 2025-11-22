@@ -1,9 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/index.py": {
-      "use": "@vercel/python"
-    }
+    "api/index.py": {}
   },
   "routes": [
     { "src": "/api/(.*)", "dest": "api/index.py" },
